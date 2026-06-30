@@ -1,0 +1,218 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #faf8f5;
+  --foreground: #1a2e3b;
+  --focus-color: #1e4d7b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  background-image: radial-gradient(ellipse 120% 80% at 50% -20%, rgb(238 244 249 / 0.6), transparent 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .section-wrap {
+    @apply mx-auto max-w-6xl px-2 py-20 sm:px-6 lg:px-8 lg:py-24;
+  }
+
+  .section-eyebrow {
+    @apply flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-forest-700;
+  }
+
+  @media (max-width: 639px) {
+    .section-eyebrow {
+      font-size: 0.9375rem;
+    }
+  }
+
+  .section-eyebrow::before {
+    content: "";
+    @apply h-px w-10 bg-accent;
+  }
+
+  .card {
+    @apply rounded-2xl border border-stone-200/80 bg-white/90 p-6 shadow-card backdrop-blur-sm transition duration-300 sm:p-8;
+  }
+
+  .card-interactive {
+    @apply card hover:-translate-y-0.5 hover:border-lake-200 hover:shadow-cardHover;
+  }
+
+  .card-accent {
+    @apply card border-l-4 border-l-lake-700 bg-gradient-to-br from-white to-lake-50/40;
+  }
+
+  .btn-primary {
+    @apply inline-flex min-h-11 min-w-[2.75rem] items-center justify-center rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-lake-950 shadow-md transition hover:bg-accent-light hover:shadow-lg;
+  }
+
+  .btn-primary-on-dark {
+    @apply inline-flex min-h-11 min-w-[2.75rem] items-center justify-center rounded-full bg-warm-white px-6 py-2.5 text-sm font-bold text-lake-900 shadow-md transition hover:bg-warm-cream hover:shadow-lg;
+  }
+
+  .btn-secondary-on-dark {
+    @apply inline-flex min-h-11 min-w-[2.75rem] items-center justify-center rounded-full border-2 border-white/60 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white hover:bg-white/15;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 min-w-[2.75rem] items-center justify-center rounded-full border-2 border-lake-700 px-6 py-2.5 text-sm font-semibold text-lake-800 transition hover:bg-lake-700 hover:text-white;
+  }
+
+  .focus-ring {
+    @apply rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-color)];
+  }
+
+  .link-accessible {
+    @apply font-semibold text-lake-800 underline decoration-lake-600/40 underline-offset-4 transition hover:text-lake-900 hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-color)];
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-lake-900 focus:shadow-lg focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[var(--focus-color)];
+  }
+
+  .hero-text-panel {
+    @apply w-full rounded-3xl border border-white/10 bg-lake-950/75 px-3 py-5 shadow-panel backdrop-blur-md sm:p-9 lg:max-w-2xl;
+  }
+
+  .hero-text-contrast {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  }
+
+  .headshot-photo {
+    object-position: 68% 22%;
+    transform: scale(1.35);
+  }
+
+  .headshot-photo-bio {
+    object-position: center 15%;
+  }
+
+  .hero-scenery {
+    image-rendering: auto;
+    filter: saturate(1.04) contrast(1.02);
+  }
+
+  .hero-creek-frame {
+    @apply overflow-hidden rounded-3xl border border-white/20 shadow-panel ring-1 ring-white/10;
+  }
+
+  .creek-collage {
+    @apply h-full w-full;
+  }
+
+  .hero-creek-frame::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 bg-gradient-to-t from-lake-950/50 via-transparent to-transparent;
+  }
+
+  .creek-collage-row {
+    @apply flex h-full gap-0.5 bg-lake-950/40 p-0.5;
+  }
+
+  .creek-collage-cell {
+    @apply relative min-h-0 min-w-0 flex-1;
+  }
+
+  .creek-photo-historic {
+    filter: saturate(0.85) contrast(1.08);
+  }
+
+  .nav-link {
+    @apply rounded-full px-3 py-2 text-lg font-semibold text-stone-700 transition hover:bg-lake-50 hover:text-lake-800 sm:px-4 sm:text-xl;
+  }
+
+  .question-card {
+    @apply relative overflow-hidden rounded-2xl border border-lake-100 bg-gradient-to-br from-white to-lake-50/50 px-5 py-4 font-semibold text-lake-900 shadow-sm transition hover:border-lake-200 hover:shadow-card;
+  }
+
+  .question-card::before {
+    content: "?";
+    @apply absolute -right-1 -top-2 font-serif text-5xl font-bold text-lake-100;
+  }
+
+  .priority-card {
+    @apply card-accent card-interactive relative overflow-hidden;
+  }
+
+  .priority-card::before {
+    content: "";
+    @apply pointer-events-none absolute right-0 top-0 h-32 w-32 rounded-full bg-lake-100/40 blur-2xl;
+  }
+
+  .qol-banner {
+    text-shadow: 0 2px 20px rgb(196 160 53 / 0.35);
+  }
+
+  .qol-highlight {
+    @apply font-bold text-lake-800 underline decoration-accent decoration-2 underline-offset-4;
+  }
+}
+
+@layer utilities {
+  /* 25% larger than default Tailwind scale — mobile only (below sm / 640px) */
+  @media (max-width: 639px) {
+    .m-text-xs {
+      font-size: 0.9375rem;
+    }
+
+    .m-text-sm {
+      font-size: 1.09375rem;
+    }
+
+    .m-text-base {
+      font-size: 1.25rem;
+      line-height: 1.875rem;
+    }
+
+    .m-text-lg {
+      font-size: 1.40625rem;
+      line-height: 2rem;
+    }
+
+    .m-text-xl {
+      font-size: 1.5625rem;
+      line-height: 2.125rem;
+    }
+
+    .m-text-2xl {
+      font-size: 1.875rem;
+      line-height: 2.375rem;
+    }
+
+    .m-text-3xl {
+      font-size: 2.34375rem;
+      line-height: 2.625rem;
+    }
+
+    .m-text-4xl {
+      font-size: 2.8125rem;
+      line-height: 1;
+    }
+  }
+}
