@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 12 488 488">
+  <!-- Black background circle -->
+  <circle cx="256" cy="256" r="240" fill="#000000"/>
+  
+  <!-- Teal circular border -->
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#00CED1" stroke-width="8"/>
+  
+  <!-- Orange "IN" letters - sized to touch top and bottom of circle -->
+  <text x="256" y="256" font-family="Arial, sans-serif" font-size="420" font-weight="bold" fill="#f97316" text-anchor="middle" dominant-baseline="central">IN</text>
+</svg>
+

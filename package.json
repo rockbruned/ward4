@@ -15,7 +15,8 @@
     "setup:production": "node scripts/setup-production.mjs",
     "github:setup": "node scripts/github-setup.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
-    "images:creek": "node scripts/optimize-creek-images.mjs"
+    "images:creek": "node scripts/optimize-creek-images.mjs",
+    "favicon:generate": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
