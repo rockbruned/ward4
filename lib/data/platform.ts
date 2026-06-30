@@ -38,7 +38,7 @@ export const PRIORITIES: readonly Priority[] = [
       "Arts",
       "Business",
       "Parks",
-      "Mental health",
+      "Mitigating Mental Health Challenges",
       "Community connection",
     ],
     metrics: ["A better quality of life."],
