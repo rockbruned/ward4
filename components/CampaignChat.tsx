@@ -302,10 +302,20 @@ export function CampaignChat() {
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
-        className="focus-ring flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-lake-700 to-lake-800 text-white shadow-panel ring-2 ring-accent/40 transition hover:from-lake-600 hover:to-lake-700 hover:ring-accent/60 sm:h-16 sm:w-16"
-        aria-label={open ? "Close campaign chat" : "Open campaign chat — ask Don's team a question"}
+        className="focus-ring flex min-h-[3.25rem] min-w-[9.5rem] items-center justify-center gap-2.5 rounded-full bg-gradient-to-br from-lake-700 to-lake-800 px-5 py-3.5 font-serif text-base font-bold text-white shadow-panel ring-2 ring-accent/40 transition hover:from-lake-600 hover:to-lake-700 hover:ring-accent/60 sm:min-h-[3.75rem] sm:min-w-[11rem] sm:gap-3 sm:px-6 sm:py-4 sm:text-lg"
+        aria-label={open ? "Close chat" : "Talk to Don — open campaign chat"}
       >
-        {open ? <CloseIcon /> : <ChatIcon />}
+        {open ? (
+          <>
+            <CloseIcon />
+            <span>Close</span>
+          </>
+        ) : (
+          <>
+            <ChatIcon />
+            <span>Talk to Don</span>
+          </>
+        )}
       </button>
     </div>
   );
@@ -313,7 +323,7 @@ export function CampaignChat() {
 
 function ChatIcon() {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="shrink-0 sm:h-[1.375rem] sm:w-[1.375rem]">
       <path
         d="M7 8h10M7 12h6m-9 8 2.5-3H18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2Z"
         stroke="currentColor"
