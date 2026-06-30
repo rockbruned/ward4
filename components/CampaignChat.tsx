@@ -21,6 +21,24 @@ function createId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
+function blockFilePaste(event: React.ClipboardEvent) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i]?.kind === "file") {
+      event.preventDefault();
+      return;
+    }
+  }
+}
+
+function blockFileDrop(event: React.DragEvent) {
+  if (event.dataTransfer?.types.includes("Files")) {
+    event.preventDefault();
+  }
+}
+
 export function CampaignChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -197,7 +215,12 @@ export function CampaignChat() {
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="border-t border-stone-200/80 bg-white px-4 py-3">
+          <form
+            onSubmit={handleSubmit}
+            onDragOver={blockFileDrop}
+            onDrop={blockFileDrop}
+            className="border-t border-stone-200/80 bg-white px-4 py-3"
+          >
             <div className="mb-3 grid gap-2">
               <p className="text-xs font-semibold text-lake-800">Your contact info (required for a response)</p>
               <label className="block">
@@ -242,6 +265,9 @@ export function CampaignChat() {
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
+                  onPaste={blockFilePaste}
+                  onDragOver={blockFileDrop}
+                  onDrop={blockFileDrop}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                       e.preventDefault();
@@ -264,7 +290,7 @@ export function CampaignChat() {
               </button>
             </div>
             <p className="mt-2 text-[0.65rem] leading-snug text-stone-500">
-              {CHAT_POLICY.hateSpeech} Messages are sent to the campaign team.
+              Text messages only — no images or files. {CHAT_POLICY.hateSpeech} Messages are sent to the campaign team.
             </p>
           </form>
         </div>

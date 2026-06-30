@@ -7,12 +7,28 @@ import { checkRateLimit } from "@/lib/chat/rate-limit";
 
 const MAX_MESSAGE_LENGTH = 1000;
 
+const DISALLOWED_BODY_KEYS = new Set([
+  "attachments",
+  "attachment",
+  "files",
+  "file",
+  "images",
+  "image",
+  "media",
+  "upload",
+  "uploads",
+]);
+
 type ChatRequest = {
-  message?: string;
+  message?: unknown;
   name?: string;
   email?: string;
   referrer?: string;
 };
+
+function isPlainTextString(value: unknown): value is string {
+  return typeof value === "string";
+}
 
 function clientKey(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -23,6 +39,14 @@ function clientKey(request: Request): string {
 }
 
 export async function POST(request: Request) {
+  const contentType = request.headers.get("content-type") ?? "";
+  if (contentType.includes("multipart/form-data")) {
+    return NextResponse.json(
+      { error: "File uploads are not supported. Send a text message only." },
+      { status: 400 },
+    );
+  }
+
   let body: ChatRequest;
 
   try {
@@ -31,7 +55,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const message = body.message?.trim() ?? "";
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  for (const key of Object.keys(body)) {
+    if (DISALLOWED_BODY_KEYS.has(key.toLowerCase())) {
+      return NextResponse.json(
+        { error: "File uploads are not supported. Send a text message only." },
+        { status: 400 },
+      );
+    }
+  }
+
+  if (!isPlainTextString(body.message)) {
+    return NextResponse.json(
+      { error: "Message must be plain text only — no images or files." },
+      { status: 400 },
+    );
+  }
+
+  const message = body.message.trim();
 
   if (!message) {
     return NextResponse.json({ error: "Message is required." }, { status: 400 });
