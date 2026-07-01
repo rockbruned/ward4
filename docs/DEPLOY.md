@@ -196,19 +196,83 @@ Set in **Railway → don-rockbrune-ward4 → Variables** (production), or via `n
 
 
 
-| Variable | Production value |
+### Site
 
-|----------|------------------|
 
-| `NEXT_PUBLIC_SITE_URL` | `https://donrockbrune.com` |
 
-| `CONTACT_EMAIL` | `Oshawa@INsportify.com` |
+| Variable | Description | Example format |
 
-| `RESEND_API_KEY` | (optional) for campaign chat email |
+|----------|-------------|----------------|
 
-| `RESEND_FROM_EMAIL` | verified sender in Resend |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL (canonical links, OG, QR) | `https://donrockbrune.com` |
 
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | (optional) GA4 ID |
+| `CONTACT_EMAIL` | Default campaign contact; fallback for chat notifications | `Oshawa@INsportify.com` |
+
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | (optional) Google Analytics 4 measurement ID | `G-XXXXXXXXXX` |
+
+
+
+### Chat email (Resend)
+
+
+
+Required to forward “Talk to Don” messages to the campaign inbox. Without these, chat still works but no email is sent (messages are logged server-side only).
+
+
+
+| Variable | Description | Example format |
+
+|----------|-------------|----------------|
+
+| `RESEND_API_KEY` | API key from [Resend](https://resend.com) dashboard | `re_xxxxxxxxxxxx` |
+
+| `RESEND_FROM_EMAIL` | Verified sender domain/address in Resend | `Don Rockbrune <notify@donrockbrune.com>` |
+
+| `CHAT_NOTIFY_EMAIL` | (optional) Inbox for chat notifications; defaults to `CONTACT_EMAIL` | `Oshawa@INsportify.com` |
+
+
+
+**Resend setup (brief):**
+
+
+
+1. Create a Resend account and add/verify your sending domain (or use Resend’s sandbox for testing).
+
+2. Create an API key under **API Keys**.
+
+3. Set `RESEND_API_KEY` and `RESEND_FROM_EMAIL` on the Railway service (use an address on your verified domain).
+
+4. Redeploy. Submit a test message via “Talk to Don” — you should receive email at `CHAT_NOTIFY_EMAIL` or `CONTACT_EMAIL`.
+
+
+
+### Chat database (Railway Postgres)
+
+
+
+Stores visitor messages for campaign follow-up. Without `DATABASE_URL`, chat and email still work; storage is skipped with a server log warning.
+
+
+
+| Variable | Description | Example format |
+
+|----------|-------------|----------------|
+
+| `DATABASE_URL` | Postgres connection string from Railway Postgres plugin | `postgresql://postgres:password@hostname.railway.app:5432/railway` |
+
+
+
+**Postgres setup (brief):**
+
+
+
+1. In **Railway → don-rockbrune-ward4 project**, click **+ New** → **Database** → **PostgreSQL**.
+
+2. Open the Postgres service → **Variables** → copy `DATABASE_URL` (or use **Reference Variable** on the web service to link it).
+
+3. Add `DATABASE_URL` to the **don-rockbrune-ward4** web service variables (reference from the plugin is preferred so credentials stay in sync).
+
+4. Redeploy. The `chat_messages` table is created automatically on first chat submission.
 
 
 

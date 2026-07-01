@@ -1,7 +1,8 @@
 export const CHAT_POLICY = {
   hateSpeech:
     "This chat does not tolerate hate speech or negative or abusive commentary. Such messages may be ignored.",
-  privacy: "Your name and email will not be published on this site.",
+  privacy:
+    "Your name and email will not be published on this site. Messages are stored securely for campaign follow-up only.",
   identity:
     "To receive a personal response, please provide your name and email. Anonymous messages may be sent, but the campaign will not follow up without your contact details.",
 } as const;

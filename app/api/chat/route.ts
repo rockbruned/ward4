@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { buildChatReply } from "@/lib/chat/answers";
 import { containsHateOrAbuse } from "@/lib/chat/moderation";
+import { saveChatMessage } from "@/lib/chat/db";
 import { sendChatNotification } from "@/lib/chat/notify";
 import { HATE_REFUSAL_REPLY } from "@/lib/chat/policy";
 import { checkRateLimit } from "@/lib/chat/rate-limit";
@@ -111,6 +112,16 @@ export async function POST(request: Request) {
 
   const timestamp = new Date().toISOString();
   const answer = buildChatReply(message, { name, email });
+  const followUpExpected = Boolean(name && email);
+
+  await saveChatMessage({
+    message,
+    name,
+    email,
+    referrer,
+    followUpExpected,
+    moderated: false,
+  });
 
   const notification = await sendChatNotification({
     message,
