@@ -68,6 +68,8 @@ Individual scripts:
 
 | `npm run railway:setup` | `scripts/railway-setup-production.mjs` | Domains + env var + DNS output |
 
+| `npm run railway:sync-env` | `scripts/railway-sync-env.mjs` | Resend/chat env from `.env` → Railway |
+
 | `npm run github:setup` | `scripts/github-setup.mjs` | Repo + `RAILWAY_TOKEN` secret |
 
 | `npm run setup:production` | `scripts/setup-production.mjs` | Orchestrator (above + matrix) |
@@ -86,6 +88,8 @@ Individual scripts:
 
 | `NEXT_PUBLIC_SITE_URL` | **Yes** | Set by `railway:setup` if unset |
 
+| Resend / chat env vars | **Yes** | `npm run railway:sync-env` (from local `.env`; optional `--postgres-ref`, `--deploy`, `--verify-chat`) |
+
 | DNS CNAME + TXT at registrar | **No** (by default) | Copy records from `railway:setup` output into registrar UI |
 
 | DNS via Cloudflare API | **Optional** | Copy `scripts/dns-cloudflare.example.mjs` → `dns-cloudflare.mjs`, set `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ZONE_ID` |
@@ -103,6 +107,13 @@ Individual scripts:
 
 
 **Honest limit:** apex DNS automation depends on your DNS provider. Cloudflare is scriptable; most registrars are copy-paste unless you integrate their API.
+
+
+
+```bash
+# Sync Resend/chat vars from .env → Railway; optional Postgres ref, redeploy, chat smoke test
+npm run railway:sync-env -- --postgres-ref --deploy --verify-chat
+```
 
 
 

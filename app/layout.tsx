@@ -4,7 +4,7 @@ import { Analytics } from "@/components/Analytics";
 import { CampaignChat } from "@/components/CampaignChat";
 import { SkipLink } from "@/components/SkipLink";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
-import { SITE } from "@/lib/config";
+import { FEATURES, SITE } from "@/lib/config";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main id="main-content">{children}</main>
         <SiteFooter />
-        <CampaignChat />
+        {FEATURES.chatEnabled ? <CampaignChat /> : null}
       </body>
     </html>
   );

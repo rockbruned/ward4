@@ -12,7 +12,9 @@ export const SITE = {
   office: "City Councillor",
   electionYear: 2026,
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://donrockbrune.com",
-  contactEmail: process.env.CONTACT_EMAIL ?? "Oshawa@INsportify.com",
+  contactEmail: (process.env.CONTACT_EMAIL ?? "Oshawa@INsportify.com")
+    .trim()
+    .replace(/^mailto:/i, ""),
   headshot: "/images/don-rockbrune.png",
   bioPhoto: "/images/don-rockbrune-bio.png",
   creekCollage: [
@@ -35,6 +37,12 @@ export const SITE = {
     "After exploring, for years, as a parent, taxpayer, volunteer and business person, Don feels it is time to step up and run for councillor of Ward 4 and steward the experiences into solutions.",
   visionStatement:
     "Oshawa needs to be more than blind growth. We need positive outcomes because of growth. City of Oshawa needs to be the biggest cheerleader for our citizens and businesses.",
+} as const;
+
+/** Site-wide feature toggles (UI only — API routes stay active). */
+export const FEATURES = {
+  /** "Talk to Don" floating chat widget */
+  chatEnabled: false,
 } as const;
 
 export const COLORS = {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CandidateHeadshot } from "@/components/CandidateHeadshot";
 import { ContactQrCode } from "@/components/ContactQrCode";
+import { MailtoLink } from "@/components/MailtoLink";
 import { PrimaryNav } from "@/components/PrimaryNav";
 import { footerNavLinks } from "@/lib/nav-links";
 import { SITE } from "@/lib/config";
@@ -76,9 +77,9 @@ export function SiteFooter() {
             </Link>
             <p>
               Contact:{" "}
-              <a href={`mailto:${SITE.contactEmail}`} className="link-accessible text-warm-white">
+              <MailtoLink className="link-accessible text-warm-white">
                 {SITE.contactEmail}
-              </a>
+              </MailtoLink>
             </p>
           </div>
           <ContactQrCode size={120} variant="dark" showCaption={false} className="lg:text-right" />

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ContactQrCode } from "@/components/ContactQrCode";
+import { MailtoLink } from "@/components/MailtoLink";
 import { SectionHeader } from "@/components/SectionHeader";
 import { SITE } from "@/lib/config";
 
@@ -21,9 +22,9 @@ export function GetInvolvedSection() {
             better Oshawa.
           </p>
           <div className="mt-6 flex flex-col items-start gap-8 sm:flex-row sm:items-center">
-            <a href={`mailto:${SITE.contactEmail}`} className="btn-primary focus-ring inline-flex">
+            <MailtoLink className="btn-primary focus-ring inline-flex">
               Email {SITE.contactEmail}
-            </a>
+            </MailtoLink>
             <ContactQrCode size={160} className="sm:ml-auto" />
           </div>
         </article>

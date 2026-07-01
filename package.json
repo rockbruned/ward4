@@ -12,6 +12,7 @@
     "lint": "next lint",
     "deploy": "railway up --detach",
     "railway:setup": "node scripts/railway-setup-production.mjs",
+    "railway:sync-env": "node scripts/railway-sync-env.mjs",
     "setup:production": "node scripts/setup-production.mjs",
     "github:setup": "node scripts/github-setup.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
