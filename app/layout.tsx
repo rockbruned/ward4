@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 import { CampaignChat } from "@/components/CampaignChat";
+import { ContactFloatingButton } from "@/components/ContactFloatingButton";
+import { MailtoIframeBreakout } from "@/components/MailtoIframeBreakout";
 import { SkipLink } from "@/components/SkipLink";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { FEATURES, SITE } from "@/lib/config";
@@ -34,12 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-CA">
       <body className={`${playfair.variable} ${sourceSans.variable} font-sans antialiased`}>
+        <MailtoIframeBreakout />
         <Analytics />
         <SkipLink />
         <SiteHeader />
         <main id="main-content">{children}</main>
         <SiteFooter />
-        {FEATURES.chatEnabled ? <CampaignChat /> : null}
+        {FEATURES.chatEnabled ? <CampaignChat /> : <ContactFloatingButton />}
       </body>
     </html>
   );
